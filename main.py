@@ -81,10 +81,12 @@ class OGWallpaperApp(MDApp):
             # self.root.ids.collections.box_color = (0, 0, 0, .5)
             self.root.ids.navbar.md_bg_color = (1, 1, 1, .9)
             self.theme_cls.theme_style = "Dark"
+            self.root.ids.contact.md_bg_color = (0, 0, 0, 0)
         else:
             self.root.ids.light_dark.text = "Light Mode"
             self.theme_cls.theme_style = "Light"
             self.root.ids.navbar.md_bg_color = (0.2, 0.2, 0.2, 1)
+            self.root.ids.contact.md_bg_color = (1, 1, 1, 1)
 
     id = 1
 

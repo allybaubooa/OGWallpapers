@@ -1,12 +1,12 @@
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 
 MDFloatLayout:
-    md_bg_color: 1, 1, 1, 1
     ScreenManager:
         id: screen_manager
         MDScreen:
             name: "main"
             MDFloatLayout:
+                md_bg_color: 1, 1, 1, 1
                 Image:
                     source: "images/logo.png"
                     pos_hint: {"center_x": .5, "center_y": .9}
@@ -60,256 +60,260 @@ MDFloatLayout:
 
         MDScreen:
             name: "login"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_y": .95}
-                on_release:
-                    root.ids.screen_manager.transition.direction = "right"
-                    screen_manager.current = "main"
-            Image:
-                source: "images/logo.png"
-                pos_hint: {"center_x": .5, "center_y": .9}
-                size_hint: .8, .8
-            MDLabel:
-                text: "Sign in to continue"
-                font_name: "fonts/Poppins-Medium"
-                font_size: "18sp"
-                pos_hint: {"center_x": .5,"center_y": .75}
-                halign: "center"
-                color: rgba(173, 182, 196, 255)
             MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .63}
-                TextInput:
-                    id: email1
-                    hint_text: "Email"
+                md_bg_color: 1, 1, 1, 1
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_y": .95}
+                    on_release:
+                        root.ids.screen_manager.transition.direction = "right"
+                        screen_manager.current = "main"
+                Image:
+                    source: "images/logo.png"
+                    pos_hint: {"center_x": .5, "center_y": .9}
+                    size_hint: .8, .8
+                MDLabel:
+                    text: "Sign in to continue"
                     font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
+                    font_size: "18sp"
+                    pos_hint: {"center_x": .5,"center_y": .75}
+                    halign: "center"
+                    color: rgba(173, 182, 196, 255)
                 MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .63}
+                    TextInput:
+                        id: email1
+                        hint_text: "Email"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
 
-            MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .5}
-                TextInput:
-                    id: password1
-                    hint_text: "Password"
-                    font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
-                    password: True
                 MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
-            Button:
-                text: "LOGIN"
-                size_hint: .66, .06
-                pos_hint: {"center_x": .5,"center_y": .38}
-                background_color: 0, 0, 0, 0
-                font_name: "fonts/Poppins-Bold"
-                on_release:
-                    app.receive_data(email1, password1, 0)
-                canvas.before:
-                    Color:
-                        rgb: rgba(41, 76, 96, 255)
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [5]
-            MDTextButton:
-                text: "Forgot Password?"
-                pos_hint: {"center_x": .5,"center_y": .32}
-                font_size: "14sp"
-                font_name: "fonts/Poppins-Bold"
-            MDLabel:
-                text: "or"
-                pos_hint: {"center_y": .28}
-                font_name: "fonts/Poppins-Bold"
-                font_size: "13sp"
-                halign: "center"
-            MDFloatLayout:
-                md_bg_color: rgba(178, 178, 178, 255)
-                size_hint: .3, .002
-                pos_hint: {"center_x": .3,"center_y": .280}
-            MDFloatLayout:
-                md_bg_color: rgba(178, 178, 178, 255)
-                size_hint: .3, .002
-                pos_hint: {"center_x": .7,"center_y": .280}
-            MDLabel:
-                text: "Continue with Social Media Login"
-                font_name: "fonts/Poppins-Bold"
-                font_size: "13sp"
-                halign: "center"
-                pos_hint: {"center_y": .24}
-            MDGridLayout:
-                cols: 3
-                size_hint: .48, .07
-                pos_hint: {"center_x": .55,"center_y": .2}
-                MDIconButton:
-                    icon: "google"
-                    icon_size: "30sp"
-                    theme_text_color: "Custom"
-                    text_color: rgba(219, 68, 55, 255)
-                MDIconButton:
-                    icon: "facebook"
-                    icon_size: "30sp"
-                    theme_text_color: "Custom"
-                    text_color: rgba(66, 103, 178, 255)
-                MDIconButton:
-                    icon: "apple"
-                    icon_size: "30sp"
-                    theme_text_color: "Custom"
-                    text_color: rgba(85, 85, 85, 255)
-            MDLabel:
-                text: "Don't have an account?"
-                font_name: "fonts/Poppins-Bold"
-                font_size: "13sp"
-                pos_hint: {"center_x": .70,"center_y": .14}
-                color: rgba(41, 76, 96, 255)
-            MDTextButton:
-                text: "Sign up"
-                font_name: "fonts/Poppins-Bold"
-                font_size: "11sp"
-                pos_hint: {"center_x": .72,"center_y": .14}
-                color: rgba(41, 76, 96, 255)
-                on_release:
-                    root.ids.screen_manager.transition.direction = "left"
-                    root.ids.screen_manager.current = "signup"
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .5}
+                    TextInput:
+                        id: password1
+                        hint_text: "Password"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                        password: True
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
+                Button:
+                    text: "LOGIN"
+                    size_hint: .66, .06
+                    pos_hint: {"center_x": .5,"center_y": .38}
+                    background_color: 0, 0, 0, 0
+                    font_name: "fonts/Poppins-Bold"
+                    on_release:
+                        app.receive_data(email1, password1, 0)
+                    canvas.before:
+                        Color:
+                            rgb: rgba(41, 76, 96, 255)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [5]
+                MDTextButton:
+                    text: "Forgot Password?"
+                    pos_hint: {"center_x": .5,"center_y": .32}
+                    font_size: "14sp"
+                    font_name: "fonts/Poppins-Bold"
+                MDLabel:
+                    text: "or"
+                    pos_hint: {"center_y": .28}
+                    font_name: "fonts/Poppins-Bold"
+                    font_size: "13sp"
+                    halign: "center"
+                MDFloatLayout:
+                    md_bg_color: rgba(178, 178, 178, 255)
+                    size_hint: .3, .002
+                    pos_hint: {"center_x": .3,"center_y": .280}
+                MDFloatLayout:
+                    md_bg_color: rgba(178, 178, 178, 255)
+                    size_hint: .3, .002
+                    pos_hint: {"center_x": .7,"center_y": .280}
+                MDLabel:
+                    text: "Continue with Social Media Login"
+                    font_name: "fonts/Poppins-Bold"
+                    font_size: "13sp"
+                    halign: "center"
+                    pos_hint: {"center_y": .24}
+                MDGridLayout:
+                    cols: 3
+                    size_hint: .48, .07
+                    pos_hint: {"center_x": .55,"center_y": .2}
+                    MDIconButton:
+                        icon: "google"
+                        icon_size: "30sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(219, 68, 55, 255)
+                    MDIconButton:
+                        icon: "facebook"
+                        icon_size: "30sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(66, 103, 178, 255)
+                    MDIconButton:
+                        icon: "apple"
+                        icon_size: "30sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(85, 85, 85, 255)
+                MDLabel:
+                    text: "Don't have an account?"
+                    font_name: "fonts/Poppins-Bold"
+                    font_size: "13sp"
+                    pos_hint: {"center_x": .70,"center_y": .14}
+                    color: rgba(41, 76, 96, 255)
+                MDTextButton:
+                    text: "Sign up"
+                    font_name: "fonts/Poppins-Bold"
+                    font_size: "11sp"
+                    pos_hint: {"center_x": .72,"center_y": .14}
+                    color: rgba(41, 76, 96, 255)
+                    on_release:
+                        root.ids.screen_manager.transition.direction = "left"
+                        root.ids.screen_manager.current = "signup"
 
         MDScreen:
             name: "signup"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_y": .95}
-                on_release:
-                    root.ids.screen_manager.transition.direction = "right"
-                    screen_manager.current = "main"
-            Image:
-                source: "images/logo.png"
-                pos_hint: {"center_x": .5, "center_y": .9}
-                size_hint: .8, .8
-            MDLabel:
-                text: "H i !"
-                font_name: "fonts/Poppins-Medium"
-                font_size: "26sp"
-                pos_hint: {"center_x": .2,"center_y": .75}
-                halign: "center"
-                color: rgba(41, 76, 96, 255)
-            MDLabel:
-                text: "Create a new account"
-                font_name: "fonts/Poppins-Medium"
-                font_size: "18sp"
-                pos_hint: {"center_x": .40,"center_y": .70}
-                halign: "center"
-                color: rgba(173, 182, 196, 255)
             MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .63}
-                TextInput:
-                    id: f_name2
-                    hint_text: "First Name"
+                md_bg_color: 1, 1, 1, 1
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_y": .95}
+                    on_release:
+                        root.ids.screen_manager.transition.direction = "right"
+                        screen_manager.current = "main"
+                Image:
+                    source: "images/logo.png"
+                    pos_hint: {"center_x": .5, "center_y": .9}
+                    size_hint: .8, .8
+                MDLabel:
+                    text: "H i !"
                     font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
-                MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
-            MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .53}
-                TextInput:
-                    id: l_name2
-                    hint_text: "Last Name"
+                    font_size: "26sp"
+                    pos_hint: {"center_x": .2,"center_y": .75}
+                    halign: "center"
+                    color: rgba(41, 76, 96, 255)
+                MDLabel:
+                    text: "Create a new account"
                     font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
+                    font_size: "18sp"
+                    pos_hint: {"center_x": .40,"center_y": .70}
+                    halign: "center"
+                    color: rgba(173, 182, 196, 255)
                 MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
-            MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .43}
-                TextInput:
-                    id: email2
-                    hint_text: "Email"
-                    font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .63}
+                    TextInput:
+                        id: f_name2
+                        hint_text: "First Name"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
                 MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
-            MDFloatLayout:
-                size_hint: .7, .07
-                pos_hint: {"center_x": .5,"center_y": .33}
-                TextInput:
-                    id: password2
-                    hint_text: "Password"
-                    font_name: "fonts/Poppins-Medium"
-                    size_hint_y: .75
-                    pos_hint: {"center_x": .43,"center_y": .5}
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(0, 0, 0, 255)
-                    cursor_color: rgba(0, 0, 0, 255)
-                    font_size: "14sp"
-                    cursor_width: "2sp"
-                    multiline: False
-                    password: True
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .53}
+                    TextInput:
+                        id: l_name2
+                        hint_text: "Last Name"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
                 MDFloatLayout:
-                    pos_hint: {"center_x": .45,"center_y": .0}
-                    size_hint_y: .05
-                    md_bg_color: rgba(108, 122, 137, 255)
-            Button:
-                text: "Register"
-                size_hint: .66, .06
-                pos_hint: {"center_x": .5,"center_y": .23}
-                background_color: 0, 0, 0, 0
-                font_name: "fonts/Poppins-Bold"
-                on_release:
-                    app.send_data(email2, password2, f_name2, l_name2)
-                canvas.before:
-                    Color:
-                        rgb: rgba(41, 76, 96, 255)
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [5]
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .43}
+                    TextInput:
+                        id: email2
+                        hint_text: "Email"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
+                MDFloatLayout:
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .33}
+                    TextInput:
+                        id: password2
+                        hint_text: "Password"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        pos_hint: {"center_x": .43,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                        password: True
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
+                Button:
+                    text: "Register"
+                    size_hint: .66, .06
+                    pos_hint: {"center_x": .5,"center_y": .23}
+                    background_color: 0, 0, 0, 0
+                    font_name: "fonts/Poppins-Bold"
+                    on_release:
+                        app.send_data(email2, password2, f_name2, l_name2)
+                    canvas.before:
+                        Color:
+                            rgb: rgba(41, 76, 96, 255)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [5]
 
         MDScreen:
             name: "hello"
@@ -560,6 +564,7 @@ MDFloatLayout:
                     root.ids.screen_manager.transition.direction = "right"
                     screen_manager.current = "home"
                     app.clear_result()
+                    app.return_but()
             MDLabel:
                 id: search_label
                 text: ""
@@ -589,6 +594,7 @@ MDFloatLayout:
                 on_release:
                     root.ids.screen_manager.transition.direction = "right"
                     screen_manager.current = "home"
+                    app.return_but()
             MDLabel:
                 id: recent_label
                 text: "Recents"
@@ -845,125 +851,128 @@ MDFloatLayout:
 
         MDScreen:
             name: "contactus"
-            MDIconButton:
-                icon: "arrow-left"
-                pos_hint: {"center_y": .95}
-                on_release:
-                    root.ids.screen_manager.transition.direction = "right"
-                    screen_manager.current = "home"
-                    app.return_but()
-            MDLabel:
-                text: "Contact US"
-                halign: "center"
-                pos_hint: {"center_x": .5, "center_y": .95}
-                font_name: "fonts/Poppins-Bold"
-                font_size: "18sp"
-            Image:
-                source: "images/logo.png"
-                pos_hint: {"center_x": .5, "center_y": .8}
-                size_hint: .5, .5
             MDFloatLayout:
-                size_hint: .9, .09
-                pos_hint: {"center_x": .5, "center_y": .65}
-                canvas:
-                    Color:
-                        rgb: 1, 1, 1, 1
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [6]
-                canvas.before:
-                    Color:
-                        rgb: 230/255, 230/255, 230/255, 1
-                    Line:
-                        width: 2
-                        rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
-                TextInput:
-                    id: name
-                    hint_text: "Name"
-                    font_name: "fonts/Poppins-Medium"
-                    pos_hint: {"center_x": .5, "center_y": .4}
-                    height: self.minimum_height
-                    cursor_color: rgba(41, 76, 96, 255)
-                    cursor_width: "2sp"
-                    multiline: False
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(41, 76, 96, 255)
-                    padding: 15
-                    hint_text_color: rgba(206, 206, 209, 255)
-            MDFloatLayout:
-                size_hint: .9, .09
-                pos_hint: {"center_x": .5, "center_y": .53}
-                canvas:
-                    Color:
-                        rgb: 1, 1, 1, 1
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [6]
-                canvas.before:
-                    Color:
-                        rgb: 230/255, 230/255, 230/255, 1
-                    Line:
-                        width: 2
-                        rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
-                TextInput:
-                    id: email_address
-                    hint_text: "Email"
-                    font_name: "fonts/Poppins-Medium"
-                    pos_hint: {"center_x": .5, "center_y": .4}
-                    height: self.minimum_height
-                    cursor_color: rgba(41, 76, 96, 255)
-                    cursor_width: "2sp"
-                    multiline: False
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(41, 76, 96, 255)
-                    padding: 15
-                    hint_text_color: rgba(206, 206, 209, 255)
-            MDFloatLayout:
-                size_hint: .9, None
-                height: 160
-                pos_hint: {"center_x": .5, "center_y": .34}
-                canvas:
-                    Color:
-                        rgb: 1, 1, 1, 1
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [6]
-                canvas.before:
-                    Color:
-                        rgb: 230/255, 230/255, 230/255, 1
-                    Line:
-                        width: 2
-                        rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
-                TextInput:
-                    id: message
-                    hint_text: "Message"
-                    font_name: "fonts/Poppins-Medium"
-                    pos_hint: {"center_x": .5, "center_y": .5}
+                id: contact
+                md_bg_color: 1, 1, 1, 1
+                MDIconButton:
+                    icon: "arrow-left"
+                    pos_hint: {"center_y": .96}
+                    on_release:
+                        root.ids.screen_manager.transition.direction = "right"
+                        screen_manager.current = "home"
+                        app.return_but()
+                MDLabel:
+                    text: "Contact US"
+                    halign: "center"
+                    pos_hint: {"center_x": .5, "center_y": .96}
+                    font_name: "fonts/Poppins-Bold"
+                    font_size: "18sp"
+                Image:
+                    source: "images/logo.png"
+                    pos_hint: {"center_x": .5, "center_y": .825}
+                    size_hint: .4, .4
+                MDFloatLayout:
+                    size_hint: .9, .09
+                    pos_hint: {"center_x": .5, "center_y": .65}
+                    canvas:
+                        Color:
+                            rgb: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [6]
+                    canvas.before:
+                        Color:
+                            rgb: 108/255, 122/255, 137/255, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
+                    TextInput:
+                        id: name
+                        hint_text: "Name"
+                        font_name: "fonts/Poppins-Medium"
+                        pos_hint: {"center_x": .5, "center_y": .4}
+                        height: self.minimum_height
+                        cursor_color: rgba(41, 76, 96, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(41, 76, 96, 255)
+                        padding: 15
+                        hint_text_color: rgba(108, 122, 137, 255)
+                MDFloatLayout:
+                    size_hint: .9, .09
+                    pos_hint: {"center_x": .5, "center_y": .53}
+                    canvas:
+                        Color:
+                            rgb: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [6]
+                    canvas.before:
+                        Color:
+                            rgb: 108/255, 122/255, 137/255, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
+                    TextInput:
+                        id: email_address
+                        hint_text: "Email"
+                        font_name: "fonts/Poppins-Medium"
+                        pos_hint: {"center_x": .5, "center_y": .4}
+                        height: self.minimum_height
+                        cursor_color: rgba(41, 76, 96, 255)
+                        cursor_width: "2sp"
+                        multiline: False
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(41, 76, 96, 255)
+                        padding: 15
+                        hint_text_color: rgba(108, 122, 137, 255)
+                MDFloatLayout:
+                    size_hint: .9, None
                     height: 160
-                    cursor_color: rgba(41, 76, 96, 255)
-                    cursor_width: "2sp"
-                    background_color: 1, 1, 1, 0
-                    foreground_color: rgba(41, 76, 96, 255)
-                    padding: 15
-                    hint_text_color: rgba(206, 206, 209, 255)
-            Button:
-                text: "Send Message"
-                size_hint: .66, .06
-                pos_hint: {"center_x": .5,"center_y": .15}
-                background_color: 0, 0, 0, 0
-                font_name: "fonts/Poppins-Bold"
-                on_release:
-                    app.send_email(name, email_address, message)
-                canvas.before:
-                    Color:
-                        rgb: rgba(41, 76, 96, 255)
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [5]
+                    pos_hint: {"center_x": .5, "center_y": .34}
+                    canvas:
+                        Color:
+                            rgb: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [6]
+                    canvas.before:
+                        Color:
+                            rgb: 108/255, 122/255, 137/255, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 6, 6, 6, 6, 100
+                    TextInput:
+                        id: message
+                        hint_text: "Message"
+                        font_name: "fonts/Poppins-Medium"
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        height: 160
+                        cursor_color: rgba(41, 76, 96, 255)
+                        cursor_width: "2sp"
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(41, 76, 96, 255)
+                        padding: 15
+                        hint_text_color: rgba(108, 122, 137, 255)
+                Button:
+                    text: "Send Message"
+                    size_hint: .66, .06
+                    pos_hint: {"center_x": .5,"center_y": .15}
+                    background_color: 0, 0, 0, 0
+                    font_name: "fonts/Poppins-Bold"
+                    on_release:
+                        app.send_email(name, email_address, message)
+                    canvas.before:
+                        Color:
+                            rgb: rgba(41, 76, 96, 255)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [5]
 
 
 
