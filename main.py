@@ -6,13 +6,12 @@ import smtplib
 from email.message import EmailMessage
 from email.utils import formataddr
 from urllib import request
-
 from dotenv import load_dotenv
-
 import mysql.connector
 from kivy.animation import Animation
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
 from kivy.utils import rgba
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -23,6 +22,7 @@ from kivymd.uix.imagelist import MDSmartTile
 from kivy.uix.image import AsyncImage
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.behaviors import FakeRectangularElevationBehavior
+from twilio.rest import Client
 
 Window.size = (390, 700)
 
@@ -55,6 +55,11 @@ class But_pressed(MDIconButton):
     pass
 
 
+class InputField(TextInput):
+    def __init__(self, **kwargs):
+        super().__init__(multiline=False, input_filter="int", **kwargs)
+
+
 category_list = ["abstract", "animals", "nature", "space"]
 
 # Env Variables
@@ -62,6 +67,8 @@ load_dotenv()
 
 EMAIL = os.environ.get('EMAIL')
 PASSWORD = os.environ.get('PASSWORD')
+ACCOUNT_SID = os.environ.get('ACCOUNT_SID')
+AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
 
 
 class OGWallpaperApp(MDApp):
@@ -129,6 +136,24 @@ class OGWallpaperApp(MDApp):
         self.root.ids.search_image.text = ""
         self.root.ids.search_list.clear_widgets(None)
 
+    def pw_icon(self, ins):
+        if ins in self.root.ids.values():
+            current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
+            for i in range(2):
+                if f"show{i+1}" == current_id:
+                    self.root.ids[f"show{i+1}"].icon = "eye" \
+                        if self.root.ids[f"show{i+1}"].icon == "eye-off" \
+                        else "eye-off"
+
+    def show_pw(self, ins):
+        if ins in self.root.ids.values():
+            current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
+            for i in range(2):
+                if f"show{i+1}" == current_id and self.root.ids[f"show{i+1}"].icon == "eye":
+                    self.root.ids[f"password{i+1}"].password = False
+                else:
+                    self.root.ids[f"password{i+1}"].password = True
+
     def collections(self):
         for i in category_list:
             col = MDSmartTile(
@@ -146,27 +171,26 @@ class OGWallpaperApp(MDApp):
         list_of_id = []
         for images in range(10, 200, a):
             list_of_id.append(images)
-            # for i in list_of_id:
             results = MDSmartTile(id=f"{images}",
                                   source=f"https://picsum.photos/id/{images}/240/350",
                                   pos_hint={"center_x": .5},
                                   size_hint=(None, None),
                                   size=("240dp", "350dp"))
-            results2 = MDIconButton(id=f"{images}",
+            results2 = MDIconButton(id=f"bt{images}",
                                     icon="heart-outline",
                                     theme_icon_color="Custom",
                                     icon_color=(1, 0, 0, 1),
                                     pos_hint={"center_x": .5, "center_y": .5})
-            # results3 = MDIconButton(id=f"{images}",
-            #                         icon="download",
-            #                         theme_icon_color="Custom",
-            #                         icon_color=(0, 0, 0, 1),
-            #                         pos_hint={"center_x": .5, "center_y": .5})
+            results3 = MDIconButton(id=f"dw{images}",
+                                    icon="download",
+                                    theme_icon_color="Custom",
+                                    icon_color=(0, 0, 0, 1),
+                                    pos_hint={"center_x": .5, "center_y": .5})
             results2.bind(on_release=lambda x=results2: self.pressed(results.id))
-            # results3.bind(on_release=lambda x=results3: self.download(img_url))
+            results3.bind(on_release=lambda x=results3: self.download(results.id))
             self.root.ids.recent_list.add_widget(results)
             self.root.ids.recent_list.add_widget(results2)
-            # self.root.ids.recent_list.add_widget(results3)
+            self.root.ids.recent_list.add_widget(results3)
 
     def pressed(self, img_url):
         print(img_url)
@@ -195,7 +219,8 @@ class OGWallpaperApp(MDApp):
             current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
             for i in range(6):
                 if f"bt{i}" == current_id:
-                    self.root.ids[f"bt{i}"].icon = "heart" if self.root.ids[f"bt{i}"].icon == "heart-outline" \
+                    self.root.ids[f"bt{i}"].icon = "heart" \
+                        if self.root.ids[f"bt{i}"].icon == "heart-outline" \
                         else "heart-outline"
 
     def add_fav(self, image_id, button):
@@ -205,26 +230,76 @@ class OGWallpaperApp(MDApp):
                                       size_hint=(None, None),
                                       size=("240dp", "350dp"))
             self.root.ids.fav_list.add_widget(self.result)
-            toast("Added To Favorites.", background=[41/255, 76/255, 96/255, 0.8])
+            toast("Added To Favorites.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
         elif button.icon == "heart-outline":
             self.root.ids.fav_list.remove_widget(self.result)
-            toast("Removed from Favorites.", background=[41/255, 76/255, 96/255, 0.8])
+            toast("Removed from Favorites.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
     def send_data(self, email, password, f_name, l_name):
-        if re.fullmatch(self.regex, email.text):
-            self.cursor.execute(f"insert into logindata values('{email.text}', '{password.text}', '{f_name.text}',"
-                                f" '{l_name.text}')")
-            self.database.commit()
-            self.receive_data(email, password, id=1)
-            self.start(f_name.text)
-            email.text = ""
-            password.text = ""
-            f_name.text = ""
-            l_name.text = ""
-        elif email.text == "" and password.text == "" and f_name.text == "" and l_name.text == "":
-            toast("Please Enter Your Details to Proceed!", background=[0.8, 0, 0, 1])
+        if re.fullmatch(self.regex, email.text) and email.text != "" and password.text != "" and \
+                f_name.text != "" and l_name.text != "":
+
+            self.cursor.execute("select * from logindata")
+            list_of_email = []
+            for i in self.cursor.fetchall():
+                list_of_email.append(i[0])
+            if email.text in list_of_email and email.text != "":
+                email.text = ""
+                toast("Account Already Exist!!", background=[0.8, 0, 0, 1])
+            else:
+                self.cursor.execute(f"insert into logindata values('{email.text}', "
+                                    f"'{password.text}', "
+                                    f"'{f_name.text}',"
+                                    f" '{l_name.text}')")
+                self.database.commit()
+                toast("OTP has been sent on your phone!!", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
+                self.otp_verification(f_name)
+                self.receive_data(email, password, id=1)
+                email.text = ""
+                password.text = ""
+                f_name.text = ""
+                l_name.text = ""
+        elif email.text == "" or password.text == "" or f_name.text == "" or l_name.text == "":
+            toast("Please Enter All the Details to Proceed!", background=[0.8, 0, 0, 1])
         else:
             toast("Invalid Details", background=[0.8, 0, 0, 1])
+
+    def otp_verification(self, f_name):
+        self.first_name = f_name.text
+        self.root.ids.screen_manager.current = "otp"
+        self.otp = random.randint(1000, 9999)
+        account_sid = ACCOUNT_SID
+        auth_token = AUTH_TOKEN
+
+        client = Client(account_sid, auth_token)
+
+        msg = client.messages.create(
+            body=f"Your OTP Password is: {self.otp}",
+            from_="+19259408526",
+            to="+23058163182"
+        )
+        return self.first_name
+
+    def check_otp(self, otpInput):
+        if int(otpInput) == self.otp:
+            self.start(self.first_name)
+            toast("You have successfully Registered your account!!", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
+        else:
+            toast("Wrong OTP! Please Input Correct OTP.", background=[0.8, 0, 0, 1])
+
+    def resend_otp(self):
+        self.otp = random.randint(1000, 9999)
+        account_sid = ACCOUNT_SID
+        auth_token = AUTH_TOKEN
+
+        client = Client(account_sid, auth_token)
+
+        msg = client.messages.create(
+            body=f"Your OTP Password is: {self.otp}",
+            from_="+19259408526",
+            to="+23058163182"
+        )
+        toast("OTP has been sent again!!", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
     def receive_data(self, email, password, id):
         self.cursor.execute("select * from logindata")
@@ -235,13 +310,14 @@ class OGWallpaperApp(MDApp):
             self.cursor.execute(f"select password from logindata where email='{email.text}'")
             for j in self.cursor:
                 if password.text == j[0]:
-                    toast("You have successfully login your account!!", background=[41/255, 76/255, 96/255, 0.8])
                     if id == 0:
                         self.root.ids.screen_manager.current = "home"
+                        toast("You have successfully login your account!!",
+                              background=[41 / 255, 76 / 255, 96 / 255, 0.8])
                 else:
                     toast("Incorrect Password!! Try Again.", background=[0.8, 0, 0, 1])
-        else:
-            toast("Incorrect Email Address!!!", background=[0.8, 0, 0, 1])
+        elif email.text == "" or password.text == "":
+            toast("Please Enter Details to Login!!!", background=[0.8, 0, 0, 1])
 
     def send_email(self, name, email_address, message):
         msg = EmailMessage()
@@ -255,7 +331,7 @@ class OGWallpaperApp(MDApp):
         name.text = ""
         email_address.text = ""
         message.text = ""
-        toast("Message Sent", background=[41/255, 76/255, 96/255, 0.8])
+        toast("Message Sent", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
 
 if __name__ == "__main__":

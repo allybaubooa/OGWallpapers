@@ -115,6 +115,16 @@ MDFloatLayout:
                         cursor_width: "2sp"
                         multiline: False
                         password: True
+                    MDIconButton:
+                        id: show1
+                        icon: "eye-off"
+                        icon_size: "30sp"
+                        pos_hint: {"center_x": .89,"center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: rgba(0, 0, 0, 255)
+                        on_release:
+                            app.pw_icon(self)
+                            app.show_pw(self)
                     MDFloatLayout:
                         pos_hint: {"center_x": .45,"center_y": .0}
                         size_hint_y: .05
@@ -136,33 +146,33 @@ MDFloatLayout:
                             radius: [5]
                 MDTextButton:
                     text: "Forgot Password?"
-                    pos_hint: {"center_x": .5,"center_y": .32}
+                    pos_hint: {"center_x": .5,"center_y": .3}
                     font_size: "14sp"
                     font_name: "fonts/Poppins-Bold"
                 MDLabel:
                     text: "or"
-                    pos_hint: {"center_y": .28}
+                    pos_hint: {"center_y": .25}
                     font_name: "fonts/Poppins-Bold"
                     font_size: "13sp"
                     halign: "center"
                 MDFloatLayout:
                     md_bg_color: rgba(178, 178, 178, 255)
                     size_hint: .3, .002
-                    pos_hint: {"center_x": .3,"center_y": .280}
+                    pos_hint: {"center_x": .3,"center_y": .25}
                 MDFloatLayout:
                     md_bg_color: rgba(178, 178, 178, 255)
                     size_hint: .3, .002
-                    pos_hint: {"center_x": .7,"center_y": .280}
+                    pos_hint: {"center_x": .7,"center_y": .25}
                 MDLabel:
                     text: "Continue with Social Media Login"
                     font_name: "fonts/Poppins-Bold"
                     font_size: "13sp"
                     halign: "center"
-                    pos_hint: {"center_y": .24}
+                    pos_hint: {"center_y": .21}
                 MDGridLayout:
                     cols: 3
                     size_hint: .48, .07
-                    pos_hint: {"center_x": .55,"center_y": .2}
+                    pos_hint: {"center_x": .55,"center_y": .16}
                     MDIconButton:
                         icon: "google"
                         icon_size: "30sp"
@@ -182,13 +192,13 @@ MDFloatLayout:
                     text: "Don't have an account?"
                     font_name: "fonts/Poppins-Bold"
                     font_size: "13sp"
-                    pos_hint: {"center_x": .70,"center_y": .14}
+                    pos_hint: {"center_x": .70,"center_y": .1}
                     color: rgba(41, 76, 96, 255)
                 MDTextButton:
                     text: "Sign up"
                     font_name: "fonts/Poppins-Bold"
                     font_size: "11sp"
-                    pos_hint: {"center_x": .72,"center_y": .14}
+                    pos_hint: {"center_x": .72,"center_y": .1}
                     color: rgba(41, 76, 96, 255)
                     on_release:
                         root.ids.screen_manager.transition.direction = "left"
@@ -295,6 +305,16 @@ MDFloatLayout:
                         cursor_width: "2sp"
                         multiline: False
                         password: True
+                    MDIconButton:
+                        id: show2
+                        icon: "eye-off"
+                        icon_size: "30sp"
+                        pos_hint: {"center_x": .89,"center_y": .5}
+                        theme_text_color: "Custom"
+                        text_color: rgba(0, 0, 0, 255)
+                        on_release:
+                            app.pw_icon(self)
+                            app.show_pw(self)
                     MDFloatLayout:
                         pos_hint: {"center_x": .45,"center_y": .0}
                         size_hint_y: .05
@@ -307,6 +327,74 @@ MDFloatLayout:
                     font_name: "fonts/Poppins-Bold"
                     on_release:
                         app.send_data(email2, password2, f_name2, l_name2)
+                    canvas.before:
+                        Color:
+                            rgb: rgba(41, 76, 96, 255)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [5]
+
+        MDScreen:
+            name: "otp"
+            MDFloatLayout:
+                md_bg_color: 1, 1, 1, 1
+                MDLabel:
+                    text: "Enter your OTP Password to Proceed!"
+                    font_name: "fonts/Poppins-Medium"
+                    font_size: "26sp"
+                    pos_hint: {"center_x": .5,"center_y": .65}
+                    halign: "center"
+                    color: rgba(41, 76, 96, 255)
+                MDFloatLayout:
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .5}
+                    InputField:
+                        id: otp_pw
+                        hint_text: "Enter OTP..."
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint_y: .75
+                        size_hint_x: .5
+                        halign: "center"
+                        pos_hint: {"center_x": .5,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .5,"center_y": .0}
+                        size_hint_y: .05
+                        size_hint_x: .4
+                        halign: "center"
+                        md_bg_color: rgba(108, 122, 137, 255)
+                MDFloatLayout:
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .53}
+                Button:
+                    text: "Confirm"
+                    size_hint: .5, .06
+                    pos_hint: {"center_x": .5,"center_y": .35}
+                    background_color: 0, 0, 0, 0
+                    font_name: "fonts/Poppins-Bold"
+                    on_release:
+                        app.check_otp(otp_pw.text)
+                    canvas.before:
+                        Color:
+                            rgb: rgba(41, 76, 96, 255)
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [5]
+                Button:
+                    text: "Resend OTP"
+                    size_hint: .5, .06
+                    pos_hint: {"center_x": .5,"center_y": .25}
+                    background_color: 0, 0, 0, 0
+                    font_name: "fonts/Poppins-Bold"
+                    on_release:
+                        app.resend_otp()
                     canvas.before:
                         Color:
                             rgb: rgba(41, 76, 96, 255)
@@ -554,6 +642,68 @@ MDFloatLayout:
                         size: "180dp", "200dp"
                         on_release:
                             print("hello")
+            NavBar:
+                id: navbar
+                size_hint: .9, .1
+                pos_hint: {"center_x": .5, "center_y": .08}
+                elevation: 10
+                md_bg_color: 0.2, 0.2, 0.2, 1
+                radius: [10]
+                MDGridLayout:
+                    cols: 4
+                    size_hint_x: .9
+                    spacing: 10
+                    pos_hint: {"center_x": .5, "center_y": .55}
+                    MDIconButton:
+                        id: nav1
+                        icon: "home"
+                        icon_size: "50sp"
+                        ripple_scale: 0
+                        user_font_size: "50sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(253, 275, 277, 255)
+                        on_release:
+                            screen_manager.current = "home"
+                            app.clear_result()
+                            app.changenav_color(self)
+                    MDIconButton:
+                        id: nav2
+                        icon: "fire"
+                        icon_size: "50sp"
+                        ripple_scale: 0
+                        user_font_size: "50sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(173, 182, 196, 255)
+                        on_release:
+                            root.ids.screen_manager.transition.direction = "left"
+                            screen_manager.current = "category"
+                            app.changenav_color(self)
+                    MDIconButton:
+                        id: nav3
+                        icon: "cards-heart"
+                        icon_size: "50sp"
+                        ripple_scale: 0
+                        user_font_size: "50sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(173, 182, 196, 255)
+                        on_release:
+                            root.ids.screen_manager.transition.direction = "left"
+                            screen_manager.current = "favorites"
+                            app.clear_result()
+                            app.changenav_color(self)
+                    MDIconButton:
+                        id: nav4
+                        icon: "email"
+                        icon_size: "50sp"
+                        ripple_scale: 0
+                        user_font_size: "50sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(173, 182, 196, 255)
+                        on_release:
+                            root.ids.screen_manager.transition.direction = "left"
+                            screen_manager.current = "contactus"
+                            app.clear_result()
+                            app.changenav_color(self)
 
         MDScreen:
             name: "search_page"
@@ -974,68 +1124,3 @@ MDFloatLayout:
                             pos: self.pos
                             radius: [5]
 
-
-
-
-    NavBar:
-        id: navbar
-        size_hint: .9, .1
-        pos_hint: {"center_x": .5, "center_y": .08}
-        elevation: 10
-        md_bg_color: 0.2, 0.2, 0.2, 1
-        radius: [10]
-        MDGridLayout:
-            cols: 4
-            size_hint_x: .9
-            spacing: 10
-            pos_hint: {"center_x": .5, "center_y": .55}
-            MDIconButton:
-                id: nav1
-                icon: "home"
-                icon_size: "50sp"
-                ripple_scale: 0
-                user_font_size: "50sp"
-                theme_text_color: "Custom"
-                text_color: rgba(253, 275, 277, 255)
-                on_release:
-                    screen_manager.current = "home"
-                    app.clear_result()
-                    app.changenav_color(self)
-            MDIconButton:
-                id: nav2
-                icon: "fire"
-                icon_size: "50sp"
-                ripple_scale: 0
-                user_font_size: "50sp"
-                theme_text_color: "Custom"
-                text_color: rgba(173, 182, 196, 255)
-                on_release:
-                    root.ids.screen_manager.transition.direction = "left"
-                    screen_manager.current = "category"
-                    app.changenav_color(self)
-            MDIconButton:
-                id: nav3
-                icon: "cards-heart"
-                icon_size: "50sp"
-                ripple_scale: 0
-                user_font_size: "50sp"
-                theme_text_color: "Custom"
-                text_color: rgba(173, 182, 196, 255)
-                on_release:
-                    root.ids.screen_manager.transition.direction = "left"
-                    screen_manager.current = "favorites"
-                    app.clear_result()
-                    app.changenav_color(self)
-            MDIconButton:
-                id: nav4
-                icon: "email"
-                icon_size: "50sp"
-                ripple_scale: 0
-                user_font_size: "50sp"
-                theme_text_color: "Custom"
-                text_color: rgba(173, 182, 196, 255)
-                on_release:
-                    root.ids.screen_manager.transition.direction = "left"
-                    screen_manager.current = "contactus"
-                    app.clear_result()
-                    app.changenav_color(self)
