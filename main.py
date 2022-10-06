@@ -1,4 +1,4 @@
-# from kivymd.uix.screen import MDScreen
+# imports
 import os
 import random
 import re
@@ -27,6 +27,7 @@ from twilio.rest import Client
 Window.size = (390, 700)
 
 
+# Load class
 class LoaderImage(AsyncImage):
     pass
 
@@ -44,10 +45,6 @@ class NavBar(FakeRectangularElevationBehavior, MDFloatLayout):
 
 
 class ProfileCard(FakeRectangularElevationBehavior, MDFloatLayout):
-    pass
-
-
-class SmartTileWithStar(MDSmartTile):
     pass
 
 
@@ -71,17 +68,20 @@ ACCOUNT_SID = os.environ.get('ACCOUNT_SID')
 AUTH_TOKEN = os.environ.get('AUTH_TOKEN')
 
 
+# App Class
 class OGWallpaperApp(MDApp):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     database = mysql.connector.Connect(host="localhost", user="root", password="140598", database="login",
                                        auth_plugin='mysql_native_password')
     cursor = database.cursor()
+    id = 1
 
     def build(self):
         screen = Builder.load_file("wallpaper.kv")
         self.theme_cls.theme_style = "Light"
         return screen
 
+    # Dark/Light mode Switch class
     def check(self, checkbox, value):
         if value:
             self.root.ids.light_dark.text = "Dark Mode"
@@ -95,8 +95,7 @@ class OGWallpaperApp(MDApp):
             self.root.ids.navbar.md_bg_color = (0.2, 0.2, 0.2, 1)
             self.root.ids.contact.md_bg_color = (1, 1, 1, 1)
 
-    id = 1
-
+    # Welcome Screen animation
     def start(self, f_name, *args):
         self.root.ids.screen_manager.current = "hello"
         a = self.root.ids.text1
@@ -113,57 +112,54 @@ class OGWallpaperApp(MDApp):
             Animation.cancel_all(self.root.ids.text2)
             self.root.ids.screen_manager.current = "home"
 
+    # Search_engine
     def search(self, search_image):
         if search_image != "":
             self.root.ids.search_label.text = search_image
             self.root.ids.screen_manager.transition.direction = "left"
             self.root.ids.screen_manager.current = "search_page"
             for image in range(50):
-                result = LoaderImage(source=f"https://source.unsplash.com/random/180x240/?{search_image}={image}",
+                result = ImageButton(source=f"https://source.unsplash.com/random/180x240/?{search_image}={image}",
                                      pos_hint={"center_x": .5}, size_hint=(None, None), size=("180dp", "240dp"))
+                print(result.source)
                 self.root.ids.search_list.add_widget(result)
 
+    # Categories Goto
     def goto(self, source):
         self.root.ids.search_label.text = source
         self.root.ids.screen_manager.transition.direction = "left"
         self.root.ids.screen_manager.current = "search_page"
         for image in range(50):
-            result = LoaderImage(source=f"https://source.unsplash.com/random/180x240/?{source}={image}",
+            result = ImageButton(source=f"https://source.unsplash.com/random/180x240/?{source}={image}",
                                  pos_hint={"center_x": .5}, size_hint=(None, None), size=("180dp", "240dp"))
             self.root.ids.search_list.add_widget(result)
 
+    # Clear Search Text
     def clear_result(self):
         self.root.ids.search_image.text = ""
         self.root.ids.search_list.clear_widgets(None)
 
+    # Change Show/Hide Password Icon
     def pw_icon(self, ins):
         if ins in self.root.ids.values():
             current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
             for i in range(2):
-                if f"show{i+1}" == current_id:
-                    self.root.ids[f"show{i+1}"].icon = "eye" \
-                        if self.root.ids[f"show{i+1}"].icon == "eye-off" \
+                if f"show{i + 1}" == current_id:
+                    self.root.ids[f"show{i + 1}"].icon = "eye" \
+                        if self.root.ids[f"show{i + 1}"].icon == "eye-off" \
                         else "eye-off"
 
+    # Show/Hide Password
     def show_pw(self, ins):
         if ins in self.root.ids.values():
             current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
             for i in range(2):
-                if f"show{i+1}" == current_id and self.root.ids[f"show{i+1}"].icon == "eye":
-                    self.root.ids[f"password{i+1}"].password = False
+                if f"show{i + 1}" == current_id and self.root.ids[f"show{i + 1}"].icon == "eye":
+                    self.root.ids[f"password{i + 1}"].password = False
                 else:
-                    self.root.ids[f"password{i+1}"].password = True
+                    self.root.ids[f"password{i + 1}"].password = True
 
-    def collections(self):
-        for i in category_list:
-            col = MDSmartTile(
-                box_color=(1, 1, 1, .5),
-                source=f"https://source.unsplash.com/120x180/?{i}",
-                pos_hint={"center_x": .5, "center_y": .5},
-                size_hint=(None, None),
-                size=("180dp", "180dp"))
-            self.root.ids.collections.add_widget(col)
-
+    # Recent Page
     def recent(self):
         self.root.ids.screen_manager.transition.direction = "left"
         self.root.ids.screen_manager.current = "recent_page"
@@ -195,16 +191,19 @@ class OGWallpaperApp(MDApp):
     def pressed(self, img_url):
         print(img_url)
 
+    # Download Image
     def download(self, img_url):
         api_call = f"https://picsum.photos/id/{img_url}/800/1200"
         print(api_call)
         request.urlretrieve(api_call, f"downloads/{img_url}.png")
 
+    # NavBar Color Return Button
     def return_but(self):
         for i in range(1, 4):
             self.root.ids[f"nav{i + 1}"].text_color = rgba(173, 182, 196, 255)
         self.root.ids.nav1.text_color = rgba(253, 275, 277, 255)
 
+    # NavBar Color Change
     def changenav_color(self, ins):
         if ins in self.root.ids.values():
             current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
@@ -214,6 +213,7 @@ class OGWallpaperApp(MDApp):
                 else:
                     self.root.ids[f"nav{i + 1}"].text_color = rgba(173, 182, 196, 255)
 
+    # Favorite Icon
     def change_icon(self, ins):
         if ins in self.root.ids.values():
             current_id = list(self.root.ids.keys())[list(self.root.ids.values()).index(ins)]
@@ -223,6 +223,7 @@ class OGWallpaperApp(MDApp):
                         if self.root.ids[f"bt{i}"].icon == "heart-outline" \
                         else "heart-outline"
 
+    # Add to Fav
     def add_fav(self, image_id, button):
         if button.icon == "heart":
             self.result = MDSmartTile(source=image_id,
@@ -235,6 +236,43 @@ class OGWallpaperApp(MDApp):
             self.root.ids.fav_list.remove_widget(self.result)
             toast("Removed from Favorites.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
+    # Click on Image
+    def select_image(self, source):
+        self.root.ids.screen_manager.transition.direction = "left"
+        self.root.ids.screen_manager.current = "image_page"
+        self.newimage = ImageButton(source=source,
+                                    pos_hint={"center_x": .5, "center_y": .8},
+                                    size_hint=(None, None),
+                                    size=("280dp", "400dp"))
+        self.root.ids.sel_image.add_widget(self.newimage)
+        self.sel = self.newimage.source
+        return self.sel
+
+    # Add Favorite Selected
+    def add_fav_new(self, button):
+        if button.icon == "heart":
+            self.result = MDSmartTile(source=self.sel,
+                                      pos_hint={"center_x": .5},
+                                      size_hint=(None, None),
+                                      size=("240dp", "350dp"))
+            self.root.ids.fav_list.add_widget(self.result)
+            toast("Added To Favorites.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
+        elif button.icon == "heart-outline":
+            self.root.ids.fav_list.remove_widget(self.result)
+            toast("Removed from Favorites.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
+
+    # Return in Select Page
+    def return_back(self):
+        self.root.ids.screen_manager.transition.direction = "right"
+        self.root.ids.screen_manager.current = "home"
+        self.root.ids.sel_image.remove_widget(self.newimage)
+
+    # Download in Select Page
+    def download_sel(self):
+        api_call = self.sel
+        request.urlretrieve(api_call, f"downloads/new.png")
+
+    # Register Login
     def send_data(self, email, password, f_name, l_name):
         if re.fullmatch(self.regex, email.text) and email.text != "" and password.text != "" and \
                 f_name.text != "" and l_name.text != "":
@@ -264,6 +302,7 @@ class OGWallpaperApp(MDApp):
         else:
             toast("Invalid Details", background=[0.8, 0, 0, 1])
 
+    # OTP Verification
     def otp_verification(self, f_name):
         self.first_name = f_name.text
         self.root.ids.screen_manager.current = "otp"
@@ -280,6 +319,7 @@ class OGWallpaperApp(MDApp):
         )
         return self.first_name
 
+    # OTP Check
     def check_otp(self, otpInput):
         if int(otpInput) == self.otp:
             self.start(self.first_name)
@@ -287,6 +327,7 @@ class OGWallpaperApp(MDApp):
         else:
             toast("Wrong OTP! Please Input Correct OTP.", background=[0.8, 0, 0, 1])
 
+    # Resend OTP
     def resend_otp(self):
         self.otp = random.randint(1000, 9999)
         account_sid = ACCOUNT_SID
@@ -301,6 +342,7 @@ class OGWallpaperApp(MDApp):
         )
         toast("OTP has been sent again!!", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
+    # Login Verification
     def receive_data(self, email, password, id):
         self.cursor.execute("select * from logindata")
         list_of_email = []
@@ -319,6 +361,7 @@ class OGWallpaperApp(MDApp):
         elif email.text == "" or password.text == "":
             toast("Please Enter Details to Login!!!", background=[0.8, 0, 0, 1])
 
+    # Contact Us email
     def send_email(self, name, email_address, message):
         msg = EmailMessage()
         msg["Subject"] = "New User Message!"

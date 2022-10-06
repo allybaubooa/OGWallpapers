@@ -57,6 +57,17 @@ MDFloatLayout:
                             size: self.size
                             pos: self.pos
                             radius: [5]
+                #to delete
+                MDIconButton:
+                    id: 1234
+                    icon: "home"
+                    icon_size: "50sp"
+                    ripple_scale: 0
+                    user_font_size: "50sp"
+                    theme_text_color: "Custom"
+                    text_color: rgba(253, 275, 277, 255)
+                    on_release:
+                        screen_manager.current = "home"
 
         MDScreen:
             name: "login"
@@ -631,17 +642,21 @@ MDFloatLayout:
                     spacing: 15
                     padding: 10, 0
                     ImageButton:
-                        source: "https://source.unsplash.com/180x240/?abstract"
-                        pos_hint: {"center_x": .5, "y": .60}
-                        size_hint: None, None
-                        size: "180dp", "200dp"
-                    ImageButton:
-                        source: "https://source.unsplash.com/180x240/?lifestyle"
+                        id : img1
+                        source: "https://picsum.photos/id/237/280/400"
                         pos_hint: {"center_x": .5, "y": .60}
                         size_hint: None, None
                         size: "180dp", "200dp"
                         on_release:
-                            print("hello")
+                            app.select_image(img1.source)
+                    ImageButton:
+                        id : img2
+                        source: "https://picsum.photos/id/223/280/400"
+                        pos_hint: {"center_x": .5, "y": .60}
+                        size_hint: None, None
+                        size: "180dp", "200dp"
+                        on_release:
+                            app.select_image(img2.source)
             NavBar:
                 id: navbar
                 size_hint: .9, .1
@@ -735,6 +750,48 @@ MDFloatLayout:
                     cols: 2
                     spacing: 10
                     padding: 10, 0
+
+        MDScreen:
+            name: "image_page"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_y": .95}
+                on_release:
+                    app.return_back()
+            MDLabel:
+                id: image_label
+                text: ""
+                pos_hint: {"center_y": .95}
+                halign: "center"
+                font_name: "fonts/Poppins-Bold"
+                font_size: "20sp"
+            MDBoxLayout:
+                id: sel_image
+                orientation: "vertical"
+                pos_hint: {"center_x": .5, "center_y": .6}
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10, 0
+            MDIconButton:
+                id: bt5
+                icon: "heart-outline"
+                icon_size: "50sp"
+                theme_icon_color: "Custom"
+                icon_color: 1, 0, 0, 1
+                pos_hint: {"center_x": .3, "center_y": .2}
+                on_release:
+                    app.change_icon(self)
+                    app.add_fav_new(bt5)
+            MDIconButton:
+                id: dw5
+                icon: "download"
+                icon_size: "50sp"
+                theme_icon_color: "Custom"
+                icon_color: 0, 0, 0, 1
+                pos_hint: {"center_x": .7, "center_y": .2}
+                on_release:
+                    app.download_sel()
 
         MDScreen:
             name: "recent_page"
