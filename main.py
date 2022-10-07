@@ -326,7 +326,6 @@ class OGWallpaperApp(MDApp):
         account_sid = ACCOUNT_SID
         auth_token = AUTH_TOKEN
         self.phone_numer = f"{otpcc.text}{otpphone.text}"
-        print(self.phone_numer)
 
         client = Client(account_sid, auth_token)
 
@@ -350,7 +349,6 @@ class OGWallpaperApp(MDApp):
         self.otp = random.randint(1000, 9999)
         account_sid = ACCOUNT_SID
         auth_token = AUTH_TOKEN
-        print(self.phone_numer)
         client = Client(account_sid, auth_token)
 
         msg = client.messages.create(
