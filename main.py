@@ -92,6 +92,7 @@ class OGWallpaperApp(MDApp):
         self.theme_cls.primary_palette = "BlueGray"
         return screen
 
+    # Speed dial stack buttons
     def callback(self, ins):
         if ins.icon == "logout":
             self.root.ids.speed_dial.close_stack()
