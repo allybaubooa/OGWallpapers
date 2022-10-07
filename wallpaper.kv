@@ -57,17 +57,6 @@ MDFloatLayout:
                             size: self.size
                             pos: self.pos
                             radius: [5]
-                #to delete
-                MDIconButton:
-                    id: 1234
-                    icon: "home"
-                    icon_size: "50sp"
-                    ripple_scale: 0
-                    user_font_size: "50sp"
-                    theme_text_color: "Custom"
-                    text_color: rgba(253, 275, 277, 255)
-                    on_release:
-                        screen_manager.current = "home"
 
         MDScreen:
             name: "login"
@@ -93,11 +82,11 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .63}
-                    TextInput:
+                    MDTextFieldRect:
                         id: email1
                         hint_text: "Email"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -105,6 +94,7 @@ MDFloatLayout:
                         font_size: "14sp"
                         cursor_width: "2sp"
                         multiline: False
+                        height: "30dp"
                     MDFloatLayout:
                         pos_hint: {"center_x": .45,"center_y": .0}
                         size_hint_y: .05
@@ -113,11 +103,11 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .5}
-                    TextInput:
+                    MDTextFieldRect:
                         id: password1
                         hint_text: "Password"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -126,10 +116,11 @@ MDFloatLayout:
                         cursor_width: "2sp"
                         multiline: False
                         password: True
+                        height: "40dp"
                     MDIconButton:
                         id: show1
                         icon: "eye-off"
-                        icon_size: "30sp"
+                        icon_size: "20sp"
                         pos_hint: {"center_x": .89,"center_y": .5}
                         theme_text_color: "Custom"
                         text_color: rgba(0, 0, 0, 255)
@@ -246,11 +237,12 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .63}
-                    TextInput:
+                    MDTextFieldRect:
                         id: f_name2
                         hint_text: "First Name"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
+                        height: "40dp"
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -265,11 +257,12 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .53}
-                    TextInput:
+                    MDTextFieldRect:
                         id: l_name2
                         hint_text: "Last Name"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
+                        height: "40dp"
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -284,11 +277,12 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .43}
-                    TextInput:
+                    MDTextFieldRect:
                         id: email2
                         hint_text: "Email"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
+                        height: "40dp"
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -303,11 +297,12 @@ MDFloatLayout:
                 MDFloatLayout:
                     size_hint: .7, .07
                     pos_hint: {"center_x": .5,"center_y": .33}
-                    TextInput:
+                    MDTextFieldRect:
                         id: password2
                         hint_text: "Password"
                         font_name: "fonts/Poppins-Medium"
-                        size_hint_y: .75
+                        size_hint: 1, None
+                        height: "40dp"
                         pos_hint: {"center_x": .43,"center_y": .5}
                         background_color: 1, 1, 1, 0
                         foreground_color: rgba(0, 0, 0, 255)
@@ -319,7 +314,7 @@ MDFloatLayout:
                     MDIconButton:
                         id: show2
                         icon: "eye-off"
-                        icon_size: "30sp"
+                        icon_size: "20sp"
                         pos_hint: {"center_x": .89,"center_y": .5}
                         theme_text_color: "Custom"
                         text_color: rgba(0, 0, 0, 255)
@@ -330,14 +325,55 @@ MDFloatLayout:
                         pos_hint: {"center_x": .45,"center_y": .0}
                         size_hint_y: .05
                         md_bg_color: rgba(108, 122, 137, 255)
+                MDFloatLayout:
+                    size_hint: .7, .07
+                    pos_hint: {"center_x": .5,"center_y": .23}
+
+                    InputField:
+                        id: cc
+                        text: "+230"
+                        hint_text: "CC"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint: .18, None
+                        height: "40dp"
+                        pos_hint: {"center_x": .015,"center_y": .52}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .12,"center_y": .5}
+                        size_hint_x: .01
+                        size_hint_y: .8
+                        md_bg_color: rgba(108, 122, 137, 255)
+                    InputField:
+                        id: phone
+                        hint_text: "Phone Number"
+                        font_name: "fonts/Poppins-Medium"
+                        size_hint: .78, None
+                        height: "40dp"
+                        pos_hint: {"center_x": .55,"center_y": .5}
+                        background_color: 1, 1, 1, 0
+                        foreground_color: rgba(0, 0, 0, 255)
+                        cursor_color: rgba(0, 0, 0, 255)
+                        font_size: "14sp"
+                        cursor_width: "2sp"
+                        multiline: False
+                    MDFloatLayout:
+                        pos_hint: {"center_x": .45,"center_y": .0}
+                        size_hint_y: .05
+                        md_bg_color: rgba(108, 122, 137, 255)
+
                 Button:
                     text: "Register"
                     size_hint: .66, .06
-                    pos_hint: {"center_x": .5,"center_y": .23}
+                    pos_hint: {"center_x": .5,"center_y": .13}
                     background_color: 0, 0, 0, 0
                     font_name: "fonts/Poppins-Bold"
                     on_release:
-                        app.send_data(email2, password2, f_name2, l_name2)
+                        app.send_data(email2, password2, f_name2, l_name2, cc, phone)
                     canvas.before:
                         Color:
                             rgb: rgba(41, 76, 96, 255)
@@ -659,16 +695,16 @@ MDFloatLayout:
                             app.select_image(img2.source)
             NavBar:
                 id: navbar
-                size_hint: .9, .1
-                pos_hint: {"center_x": .5, "center_y": .08}
+                size_hint: .75, .1
+                pos_hint: {"center_x": .4, "center_y": .068}
                 elevation: 10
                 md_bg_color: 0.2, 0.2, 0.2, 1
                 radius: [10]
                 MDGridLayout:
-                    cols: 4
-                    size_hint_x: .9
+                    cols: 3
+                    size_hint_x: .6
                     spacing: 10
-                    pos_hint: {"center_x": .5, "center_y": .55}
+                    pos_hint: {"center_x": .4, "center_y": .55}
                     MDIconButton:
                         id: nav1
                         icon: "home"
@@ -706,19 +742,12 @@ MDFloatLayout:
                             screen_manager.current = "favorites"
                             app.clear_result()
                             app.changenav_color(self)
-                    MDIconButton:
-                        id: nav4
-                        icon: "email"
-                        icon_size: "50sp"
-                        ripple_scale: 0
-                        user_font_size: "50sp"
-                        theme_text_color: "Custom"
-                        text_color: rgba(173, 182, 196, 255)
-                        on_release:
-                            root.ids.screen_manager.transition.direction = "left"
-                            screen_manager.current = "contactus"
-                            app.clear_result()
-                            app.changenav_color(self)
+                MDFloatingActionButtonSpeedDial:
+                    id: speed_dial
+                    data: app.data
+                    root_button_anim: True
+                    label_text_color: [0,0,0,1]
+                    callback: app.callback
 
         MDScreen:
             name: "search_page"
