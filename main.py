@@ -209,6 +209,7 @@ class OGWallpaperApp(MDApp):
         api_call = f"https://picsum.photos/id/{image_id}/800/1200"
         print(api_call)
         request.urlretrieve(api_call, f"downloads/{image_id}.png")
+        toast("Image Saved.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
     # NavBar Color Return Button
     def return_but(self):
@@ -285,6 +286,7 @@ class OGWallpaperApp(MDApp):
         api_call = self.sel
         img_name = f"new{random.randint(1, 10000)}"
         request.urlretrieve(api_call, f"downloads/{img_name}.png")
+        toast("Image Saved.", background=[41 / 255, 76 / 255, 96 / 255, 0.8])
 
     # Register Login
     def send_data(self, email, password, f_name, l_name, cc, phone_no):
@@ -299,8 +301,8 @@ class OGWallpaperApp(MDApp):
                 email.text = ""
                 toast("Account Already Exist!!", background=[0.8, 0, 0, 1])
             else:
-                self.cursor.execute(f"insert into logindata values('{email.text}', "
-                                    f"'{password.text}', "
+                self.cursor.execute(f"insert into logindata values('{email.text}',"
+                                    f"'{password.text}',"
                                     f"'{f_name.text}',"
                                     f" '{l_name.text}')")
                 self.database.commit()
